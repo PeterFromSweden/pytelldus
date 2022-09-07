@@ -1,3 +1,4 @@
+from __future__ import print_function
 # ******************************************
 #
 # Python wrapper for libtelldus on Linux
@@ -324,75 +325,75 @@ callbacks = {'lastAdd': 0,
 
 def deviceEvent(deviceId, method, data, callbackId, context):
     if debug:
-        print 'DeviceEvent'
-        print 'deviceId:', deviceId
-        print 'method:', method
-        print 'data:', data
-        print 'callbackId:', callbackId
-        print 'context:', context
+        print('DeviceEvent')
+        print('deviceId:', deviceId)
+        print('method:', method)
+        print('data:', data)
+        print('callbackId:', callbackId)
+        print('context:', context)
 
     for key in callbacks['deviceEvent']:
         f = callbacks['deviceEvent'][key]
         try:
             f(deviceId, method, data, callbackId)
         except:
-            print 'Error calling registered callback for deviceEvent'
+            print('Error calling registered callback for deviceEvent')
             if debug:
                 raise
 
 def deviceChangeEvent(deviceId, changeEvent, changeType, callbackId, context):
     if debug:
-        print 'DeviceChangeEvent'
-        print 'deviceId:', deviceId
-        print 'changeEvent:', changeEvent
-        print 'changeType:', changeType
-        print 'callbackId:', callbackId
+        print('DeviceChangeEvent')
+        print('deviceId:', deviceId)
+        print('changeEvent:', changeEvent)
+        print('changeType:', changeType)
+        print('callbackId:', callbackId)
 
     for key in callbacks['deviceChangeEvent']:
         f = callbacks['deviceChangeEvent'][key]
         try:
             f(deviceId, changeEvent, changeType, callbackId)
         except:
-            print 'Error calling registered callback for deviceChangeEvent'
+            print('Error calling registered callback for deviceChangeEvent')
             if debug:
                 raise
 
 
 def sensorEvent(protocol, model, id, dataType, value, timestamp, callbackId, context):
     if debug:
-        print 'SensorEvent'
-        print 'protocol:', protocol
-        print 'model:', model
-        print 'id:', id
-        print 'datatype:', dataType
-        print 'value:', value
-        print 'timestamp:', timestamp
-        print 'callbackId:', callbackId
-        print 'context:', context
+        print('SensorEvent')
+        print('protocol:', protocol)
+        print('model:', model)
+        print('id:', id)
+        print('datatype:', dataType)
+        print('value:', value)
+        print('timestamp:', timestamp)
+        print('callbackId:', callbackId)
+        print('context:', context)
 
     for key in callbacks['sensorEvent']:
         f = callbacks['sensorEvent'][key]
         try:
             f(protocol, model, id, dataType, value, timestamp, callbackId)
         except:
-            print 'Error calling registered callback for sensorEvent'
+            print('Error calling registered callback for sensorEvent')
             if debug:
                 raise
 
 def rawDeviceEvent(data, controllerId, callbackId, context):
     if debug:
-        print 'RawDeviceEvent'
-        print 'data:', data
-        print 'controllerId:', controllerId
-        print 'callbackId:', callbackId
-        print 'context:', context
+        print('RawDeviceEvent')
+        print('data:', data)
+        print('controllerId:', controllerId)
+        print('callbackId:', callbackId)
+        print('context:', context)
 
     for key in callbacks['rawDeviceEvent']:
         f = callbacks['rawDeviceEvent'][key]
         try:
             f(data, controllerId, callbackId)
         except:
-            print 'Error calling registered callback for rawDeviceEvent'
+            print('Error calling registered callback for rawDeviceEvent')
             if debug:
                 raise
 
@@ -425,7 +426,7 @@ def registerEvent(func, eventType):
         elif eventType == 'rawDeviceEvent':
             _callbackFuncs['rawCallbackId'] = tdlib.tdRegisterRawDeviceEvent(_callbackFuncs['raw'], 0)
         else:
-            print 'Unknown event type', eventType
+            print('Unknown event type', eventType)
 
         
     callbacks[eventType][callbacks['lastAdd']] = func
@@ -503,68 +504,68 @@ if __name__ == '__main__':
 
     init(defaultMethods = TELLSTICK_TURNON | TELLSTICK_TURNOFF | TELLSTICK_BELL | TELLSTICK_TOGGLE | TELLSTICK_DIM | TELLSTICK_LEARN)
 
-    print 'getNumberOfDevices', getNumberOfDevices()
+    print('getNumberOfDevices', getNumberOfDevices())
     
-    print 'Id\tName'
+    print('Id\tName')
     for i in range(getNumberOfDevices()):
         devId = getDeviceId(i)
-        print devId, getName(devId), methods(devId)
+        print(devId, getName(devId), methods(devId))
 
 
     if 0:
-        print 'Methods(1)', methods(1)
-        print 'methods(1, readable=True)', methods(1, readable = True)
-        print 'methods(3124, readable=True)', methods(3124, readable = True)
-        print 'TurnOn(1)', turnOn(1)
+        print('Methods(1)', methods(1))
+        print('methods(1, readable=True)', methods(1, readable = True))
+        print('methods(3124, readable=True)', methods(3124, readable = True))
+        print('TurnOn(1)', turnOn(1))
         time.sleep(1)
-        print 'TurnOff(1)', turnOff(1)
+        print('TurnOff(1)', turnOff(1))
         time.sleep(1)
-        print 'Dim (1, 121)', dim(1, 121)
+        print('Dim (1, 121)', dim(1, 121))
     
-        print 'LastSentCommand(1)', lastSentCommand(1)
-        print 'LastSentValue(1)', lastSentValue(1)
-        print 'GetErrorString(-2)', getErrorString(-2)
+        print('LastSentCommand(1)', lastSentCommand(1))
+        print('LastSentValue(1)', lastSentValue(1))
+        print('GetErrorString(-2)', getErrorString(-2))
         
-    print 'getDeviceIdFromStr', getDeviceIdFromStr('2')    
-    print 'getDeviceIdFromStr', getDeviceIdFromStr('Vardagsrum')
-    print 'getDeviceIdFromStr', getDeviceIdFromStr('234')
+    print('getDeviceIdFromStr', getDeviceIdFromStr('2'))    
+    print('getDeviceIdFromStr', getDeviceIdFromStr('Vardagsrum'))
+    print('getDeviceIdFromStr', getDeviceIdFromStr('234'))
 
 
     devId = addDevice()
     if devId > 0:
-        print 'AddDevice', devId
-        print 'setName', repr(setName(devId, 'Test'))
-        print 'getName', repr(getName(devId))
-        print 'getProtocol', getProtocol(devId)
-        print 'setProtocol', setProtocol(devId, 'arctech')
-        print 'getProtocol', getProtocol(devId)
+        print('AddDevice', devId)
+        print('setName', repr(setName(devId, 'Test')))
+        print('getName', repr(getName(devId)))
+        print('getProtocol', getProtocol(devId))
+        print('setProtocol', setProtocol(devId, 'arctech'))
+        print('getProtocol', getProtocol(devId))
 
-        print 'getModel', getModel(devId)
-        print 'setModel', setModel(devId, 'selflearning-switch')
-        print 'getModel', getModel(devId)
+        print('getModel', getModel(devId))
+        print('setModel', setModel(devId, 'selflearning-switch'))
+        print('getModel', getModel(devId))
 
-        print 'getDeviceParameter (unit)', repr(getDeviceParameter(devId, "unit", ""))
-        print 'setDeviceParameter (unit)', repr(setDeviceParameter(devId, 'unit', '123'))                                       
-        print 'getDeviceParameter (unit)', repr(getDeviceParameter(devId, "unit", ""))
+        print('getDeviceParameter (unit)', repr(getDeviceParameter(devId, "unit", "")))
+        print('setDeviceParameter (unit)', repr(setDeviceParameter(devId, 'unit', '123')))                                       
+        print('getDeviceParameter (unit)', repr(getDeviceParameter(devId, "unit", "")))
 
-        print 'getDeviceParameter (house)', repr(getDeviceParameter(devId, "house", ""))
-        print 'setDeviceParameter (house)', repr(setDeviceParameter(devId, "house", "321"))
-        print 'getDeviceParameter (house)', repr(getDeviceParameter(devId, "house", ""))
+        print('getDeviceParameter (house)', repr(getDeviceParameter(devId, "house", "")))
+        print('setDeviceParameter (house)', repr(setDeviceParameter(devId, "house", "321")))
+        print('getDeviceParameter (house)', repr(getDeviceParameter(devId, "house", "")))
 
-        print '\n\nId\tName'
+        print('\n\nId\tName')
         for i in range(getNumberOfDevices()):
             devId = getDeviceId(i)
-            print devId, getName(devId), methods(devId)
+            print(devId, getName(devId), methods(devId))
     
-        print 'Remove Device', removeDevice(devId)
+        print('Remove Device', removeDevice(devId))
 
     else:
-        print 'addDevice returned error', getErrorString(devId)
+        print('addDevice returned error', getErrorString(devId))
 
-    print '\n\nId\tName'
+    print('\n\nId\tName')
     for i in range(getNumberOfDevices()):
         devId = getDeviceId(i)
-        print devId, getName(devId), methods(devId)
+        print(devId, getName(devId), methods(devId))
 
 
-    print 'Done with unit test'
+    print('Done with unit test')

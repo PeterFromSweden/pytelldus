@@ -1,3 +1,4 @@
+from __future__ import print_function
 # ******************************************
 #
 # Example usage of td.py that mimic tdtool
@@ -14,26 +15,26 @@ import td
 import time
 
 def myDeviceEvent(deviceId, method, data, callbackId):
-    print '%d: DeviceEvent Device: %d - %s' %( time.time(), deviceId, td.getName(deviceId) )
-    print '  method: %d - %s, data: %s' %( method, td.methodsReadable.get(method, 'Unknown' ), data )
+    print('%d: DeviceEvent Device: %d - %s' %( time.time(), deviceId, td.getName(deviceId) ))
+    print('  method: %d - %s, data: %s' %( method, td.methodsReadable.get(method, 'Unknown' ), data ))
 
 def myDeviceChangeEvent(deviceId, changeEvent, changeType, callbackId):
-    print '%d: DeviceChangeEvent Device: %d - %s' %(time.time(), deviceId, td.getName(deviceId))
-    print '  changeEvent: %d' %( changeEvent )
-    print '  changeType: %d' %( changeType )
+    print('%d: DeviceChangeEvent Device: %d - %s' %(time.time(), deviceId, td.getName(deviceId)))
+    print('  changeEvent: %d' %( changeEvent ))
+    print('  changeType: %d' %( changeType ))
 
 def myRawDeviceEvent(data, controllerId, callbackId):
-    print '%d: RawDeviceEvent: %s' %(time.time(), data)
-    print '  controllerId:', controllerId
+    print('%d: RawDeviceEvent: %s' %(time.time(), data))
+    print('  controllerId:', controllerId)
 
 def mySensorEvent(protocol, model, id, dataType, value, timestamp, callbackId):
-    print '%d: SensorEvent' %(time.time())
-    print '  protocol: %s' %(protocol)
-    print '  model: %s' %(model)
-    print '  id: %d' %(id)
-    print '  dataType: %d' %(dataType)
-    print '  value: %s' %(value)
-    print '  timestamp: %d' %(timestamp)
+    print('%d: SensorEvent' %(time.time()))
+    print('  protocol: %s' %(protocol))
+    print('  model: %s' %(model))
+    print('  id: %d' %(id))
+    print('  dataType: %d' %(dataType))
+    print('  value: %s' %(value))
+    print('  timestamp: %d' %(timestamp))
 
 def getDeviceIdAndName(input):
     if (input.isdigit()):
@@ -95,7 +96,7 @@ if __name__ == '__main__':
         else:
             res = 'Success'
 
-        print 'Turning on device:', deviceId, deviceName, '-', res
+        print('Turning on device:', deviceId, deviceName, '-', res)
 
 
 
@@ -116,7 +117,7 @@ if __name__ == '__main__':
         else:
             res = 'Success'
 
-        print 'Turning off device:', deviceId, deviceName, '-', res
+        print('Turning off device:', deviceId, deviceName, '-', res)
 
 
     elif options.on == None and options.off == None and options.bell != None and options.list == False and options.dim == None and options.learn == None and options.event == False:
@@ -135,7 +136,7 @@ if __name__ == '__main__':
         else:
             res = 'Success'
 
-        print 'Sending bell to:', deviceId, deviceName, '-', res
+        print('Sending bell to:', deviceId, deviceName, '-', res)
 
 
     elif options.on == None and options.off == None and options.bell == None and options.list == True and options.dim == None and options.learn == None and options.event == False:
@@ -144,14 +145,14 @@ if __name__ == '__main__':
         #    LIST
         #
 
-        print 'Number of devices:', td.getNumberOfDevices()
+        print('Number of devices:', td.getNumberOfDevices())
         for i in range(td.getNumberOfDevices()):
             deviceId = td.getDeviceId(i)
             cmd = td.lastSentCommand(deviceId, readable = True)
             if cmd == 'DIM':
                 cmd += ':' + str(td.lastSentValue(i))
-            print deviceId, '\t', td.getName(deviceId), '\t\t', cmd, '\t\t', td.methods(deviceId, readable = True)
-        print ''
+            print(deviceId, '\t', td.getName(deviceId), '\t\t', cmd, '\t\t', td.methods(deviceId, readable = True))
+        print('')
 
     elif options.on == None and options.off == None and options.bell == None and options.list == False and options.dim != None and options.dimlevel != None and options.learn == None and options.event == False:
  
@@ -177,7 +178,7 @@ if __name__ == '__main__':
         else:
             res = 'Success'
 
-        print 'Dimming device:', deviceId, deviceName, 'to', dimlevel, '-', res
+        print('Dimming device:', deviceId, deviceName, 'to', dimlevel, '-', res)
 
 
     elif options.on == None and options.off == None and options.bell == None and options.list == False and options.dim == None and options.learn != None and options.event == False:
@@ -196,7 +197,7 @@ if __name__ == '__main__':
         else:
             res = 'Success'
 
-        print 'Learning device:', deviceId, deviceName, '-', res
+        print('Learning device:', deviceId, deviceName, '-', res)
 
     elif options.on == None and options.off == None and options.bell == None and options.list == False and options.dim == None and options.learn == None and options.event == True:
 
@@ -206,24 +207,24 @@ if __name__ == '__main__':
         cbId = []
 
         cbId.append(td.registerDeviceEvent(myDeviceEvent))
-        print 'Register device event returned:', cbId[-1]
+        print('Register device event returned:', cbId[-1])
 
         cbId.append(td.registerDeviceChangedEvent(myDeviceChangeEvent))
-        print 'Register device changed event returned:', cbId[-1]
+        print('Register device changed event returned:', cbId[-1])
 
         cbId.append(td.registerRawDeviceEvent(myRawDeviceEvent))
-        print 'Register raw device event returned:', cbId[-1]
+        print('Register raw device event returned:', cbId[-1])
 
         cbId.append(td.registerSensorEvent(mySensorEvent))
-        print 'Register sensor event returned:', cbId[-1]
+        print('Register sensor event returned:', cbId[-1])
 
-        print 'Event handlers registered now waiting for events. Exit with ctrl-c.'
+        print('Event handlers registered now waiting for events. Exit with ctrl-c.')
             
         try:
             while(1):
                 time.sleep(1)
         except KeyboardInterrupt:
-            print 'KeyboardInterrupt received, exiting'
+            print('KeyboardInterrupt received, exiting')
             for i in cbId:
                 td.unregisterCallback(i)
 
